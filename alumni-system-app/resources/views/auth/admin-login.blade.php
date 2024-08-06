@@ -168,14 +168,6 @@
                     {{ __('Log in') }}
                 </button>
             </div>
-
-            <div class="message">
-                <p>Don't have an account? <a href="{{ route('register') }}" class="underline text-gray-600 hover:text-gray-900">Create one here</a></p>
-            </div>
-
-            <div class="flex items-center justify-end">
-                <a href="{{ route('register') }}" class="register-button">Register</a>
-            </div>
             
             <div class="image"></div>
         </form>

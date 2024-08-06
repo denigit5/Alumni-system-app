@@ -48,7 +48,7 @@ class AuthenticatedSessionController extends Controller
                     return redirect()->route('superuser.dashboard');
                 default:
                     Auth::logout();
-                    return redirect()->route('login')->withErrors(['error' => 'Invalid role.']);
+                    return redirect()->route('welcome')->withErrors(['error' => 'Invalid role.']);
             }
         }
 

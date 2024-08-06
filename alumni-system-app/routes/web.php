@@ -16,11 +16,11 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-Route::get('/about', [AboutController::class, 'about'])->name('about');
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/about', [AboutController::class, 'about'])->name('about');
 
 // Registration Routes
 Route::get('/register/alumni', [RegisteredUserController::class, 'createAlumni'])->name('alumni-register');
@@ -55,10 +55,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store']);
 
     // Profile Routes
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/show', [ProfileController::class, 'show'])->name('profile.show');
+    Route::post('/profile/upload-photos', [ProfileController::class, 'uploadPhotos'])->name('profile.uploadPhotos');
     
     // Dashboard Routes
     Route::middleware('auth')->group(function () {
@@ -85,7 +86,15 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::get('/employer/dashboard', [EmployerController::class, 'dashboard'])->name('employer.dashboard');
+Route::get('/employer/talent-discovery', [EmployerController::class, 'talentDiscovery'])->name('employer.talentDiscovery');
+Route::get('/employer/job-matching', [EmployerController::class, 'jobMatching'])->name('employer.jobMatching');
+Route::get('/employer/post-job', [EmployerController::class, 'postJob'])->name('employer.postJob');
+Route::get('/employer/profile', [EmployerController::class, 'profile'])->name('employer.profile');
+Route::get('/employer/settings', [EmployerController::class, 'settings'])->name('employer.settings');
+
+
+Route::middleware(['admin.access'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/post-jobs', [AdminController::class, 'postJobs'])->name('admin.postJobs');
     Route::post('/admin/store-job', [AdminController::class, 'storeJob'])->name('admin.storeJob');

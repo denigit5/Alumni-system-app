@@ -1,41 +1,43 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Employer;
+use App\Models\Alumni;
+use App\Models\Job;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class EmployerController extends Controller
 {
-    public function index()
+    public function dashboard()
     {
-        return view('employers.dashboard');
+        return view('employer.dashboard');
     }
 
-    public function create()
+    public function talentDiscovery()
     {
-        return view('employers.create');
+       $alumni = User::where('role', 'alumni')->get();
+       return view('employer.talentDiscovery', compact('alumni'));
     }
 
-    public function store(Request $request)
+    public function jobMatching()
     {
-        $request->validate([
-            'company_name' => 'required',
-            'contact_name' => 'required',
-            'contact_email' => 'required|email',
-        ]);
-
-        Employer::create($request->all());
-        return redirect()->route('employers.index')->with('success', 'Employer added successfully.');
+        // Fetch jobs and match with alumni profiles
+        $jobs = Job::all();
+        return view('employer.jobMatching', compact('jobs'));
     }
 
-    public function show($id)
+    public function postJob()
     {
-        $employer = Employer::findOrFail($id);
-        $alumni = User::all(); // List all alumni
-        return view('employers.show', compact('employer', 'alumni'));
+        return view('employer.postJob');
     }
 
-    // Add other methods as needed
+    public function profile()
+    {
+        return view('employer.profile');
+    }
+
+    public function settings()
+    {
+        return view('employer.settings');
+    }
 }

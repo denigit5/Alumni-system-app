@@ -19,7 +19,7 @@ class EmployerLoginController extends Controller
 
     public function showLoginForm()
     {
-        return view('auth.login-employer');
+        return view('auth.employer-login');
     }
 
     protected function guard()

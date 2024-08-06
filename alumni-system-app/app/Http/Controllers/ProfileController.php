@@ -21,6 +21,31 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function show()
+    {
+        // Replace 'profile.show' with the actual view name if different
+        return view('profile.show'); 
+    }
+
+    public function uploadPhotos(Request $request)
+    {
+        $request->validate([
+            'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        if ($request->hasFile('profile_photo')) {
+            $file = $request->file('profile_photo');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('public/profile_photos', $filename);
+
+            // Save the filename or path to the database as needed
+
+            return back()->with('success', 'Photo uploaded successfully');
+        }
+
+        return back()->with('error', 'Failed to upload photo');
+    }
+
     /**
      * Update the user's profile information.
      */
