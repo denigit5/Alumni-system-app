@@ -13,7 +13,7 @@ class AlumniController extends Controller
     /**
      * Display the alumni dashboard.
      */
-    public function index()
+    public function dashboard()
     {
         return view('alumni.dashboard');
     }

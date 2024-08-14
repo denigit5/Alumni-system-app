@@ -2,15 +2,13 @@
 
 use App\Http\Controllers\{
     ProfileController, PermissionController, RoleController, UserController,
-    AlumniController, EmployerController, SuperUserController, AdminController, ContactController, JobController, AboutController, 
+    AlumniController, EmployerController, AdminController, ContactController, JobController, AboutController, 
 };
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\{
     AuthenticatedSessionController, NewPasswordController, PasswordResetLinkController, RegisteredUserController,
     VerifyEmailController, EmailVerificationNotificationController, EmailVerificationPromptController, ConfirmablePasswordController
 };
-
-Route::resource('permissions', PermissionController::class);
 
 Route::get('/', function () {
     return view('welcome');
@@ -60,32 +58,28 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/profile/show', [ProfileController::class, 'show'])->name('profile.show');
     Route::post('/profile/upload-photos', [ProfileController::class, 'uploadPhotos'])->name('profile.uploadPhotos');
-    
-    // Dashboard Routes
-    Route::middleware('auth')->group(function () {
-        Route::get('/alumni/dashboard', [AlumniController::class, 'index'])->name('alumni.dashboard');
-        Route::get('/employer/dashboard', [EmployerController::class, 'index'])->name('employer.dashboard');
-        Route::get('/superuser/dashboard', [SuperUserController::class, 'index'])->name('superuser.dashboard');
-        Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-    });
-
-    // Alumni-specific routes
-    Route::prefix('alumni')->group(function () {
-        Route::get('portfolio/create', [AlumniController::class, 'createPortfolio'])->name('alumni.createPortfolio');
-        Route::post('portfolio', [AlumniController::class, 'storePortfolio'])->name('alumni.storePortfolio');
-        Route::get('project/create', [AlumniController::class, 'createProject'])->name('alumni.createProject');
-        Route::post('project', [AlumniController::class, 'storeProject'])->name('alumni.storeProject');
-        Route::get('projects/publish', [AlumniController::class, 'publishProjects'])->name('alumni.publishProjects');
-        Route::get('/alumni/jobs', [AlumniController::class, 'viewJobs'])->name('alumni.jobs');
-        Route::get('/alumni/jobs/{id}', [AlumniController::class, 'viewJobDetails'])->name('alumni.jobDetails');
-        Route::get('edit-projects', [AlumniController::class, 'editProjects'])->name('alumni.editProjects');
-        Route::get('delete-projects', [AlumniController::class, 'deleteProjects'])->name('alumni.deleteProjects');
-        Route::get('job-search', [AlumniController::class, 'jobSearch'])->name('alumni.jobSearch');
-        Route::get('apply-for-jobs', [AlumniController::class, 'applyForJobs'])->name('alumni.applyForJobs');
-        Route::get('view-applications', [AlumniController::class, 'viewOwnApplications'])->name('alumni.viewOwnApplications');
-    });
 });
 
+//superuser routes
+Route::resource('permissions', PermissionController::class);
+Route::get('permission/create', [PermissionController::class, 'create'])->name('permission-create');
+
+//Alumni routes
+Route::get('/alumni/dashboard', [AlumniController::class, 'dashboard'])->name('alumni.dashboard');
+Route::get('portfolio/create', [AlumniController::class, 'createPortfolio'])->name('alumni.createPortfolio');
+Route::post('portfolio', [AlumniController::class, 'storePortfolio'])->name('alumni.storePortfolio');
+Route::get('project/create', [AlumniController::class, 'createProject'])->name('alumni.createProject');
+Route::post('project', [AlumniController::class, 'storeProject'])->name('alumni.storeProject');
+Route::get('projects/publish', [AlumniController::class, 'publishProjects'])->name('alumni.publishProjects');
+Route::get('/alumni/jobs', [AlumniController::class, 'viewJobs'])->name('alumni.jobs');
+Route::get('/alumni/jobs/{id}', [AlumniController::class, 'viewJobDetails'])->name('alumni.jobDetails');
+Route::get('edit-projects', [AlumniController::class, 'editProjects'])->name('alumni.editProjects');
+Route::get('delete-projects', [AlumniController::class, 'deleteProjects'])->name('alumni.deleteProjects');
+Route::get('job-search', [AlumniController::class, 'jobSearch'])->name('alumni.jobSearch');
+Route::get('apply-for-jobs', [AlumniController::class, 'applyForJobs'])->name('alumni.applyForJobs');
+Route::get('view-applications', [AlumniController::class, 'viewOwnApplications'])->name('alumni.viewOwnApplications');
+
+//Employer routes
 Route::get('/employer/dashboard', [EmployerController::class, 'dashboard'])->name('employer.dashboard');
 Route::get('/employer/talent-discovery', [EmployerController::class, 'talentDiscovery'])->name('employer.talentDiscovery');
 Route::get('/employer/job-matching', [EmployerController::class, 'jobMatching'])->name('employer.jobMatching');
@@ -93,16 +87,14 @@ Route::get('/employer/post-job', [EmployerController::class, 'postJob'])->name('
 Route::get('/employer/profile', [EmployerController::class, 'profile'])->name('employer.profile');
 Route::get('/employer/settings', [EmployerController::class, 'settings'])->name('employer.settings');
 
-
-Route::middleware(['admin.access'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-    Route::get('/admin/post-jobs', [AdminController::class, 'postJobs'])->name('admin.postJobs');
-    Route::post('/admin/store-job', [AdminController::class, 'storeJob'])->name('admin.storeJob');
-    Route::get('/admin/manage-job-postings', [AdminController::class, 'manageJobPostings'])->name('admin.manage-job-postings');
-    Route::get('/admin/edit-job/{id}', [AdminController::class, 'editJob'])->name('admin.editJob');
-    Route::post('/admin/update-job/{id}', [AdminController::class, 'updateJob'])->name('admin.updateJob');
-    Route::delete('/admin/delete-job/{id}', [AdminController::class, 'deleteJob'])->name('admin.deleteJob');
-    Route::get('/admin/moderate-content', [AdminController::class, 'moderateContent'])->name('admin.moderate-content');
-});
+//Admin routes
+Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+Route::get('/admin/post-jobs', [AdminController::class, 'postJobs'])->name('admin.postJobs');
+Route::post('/admin/store-job', [AdminController::class, 'storeJob'])->name('admin.storeJob');
+Route::get('/admin/manage-job-postings', [AdminController::class, 'manageJobPostings'])->name('admin.manage-job-postings');
+Route::get('/admin/edit-job/{id}', [AdminController::class, 'editJob'])->name('admin.editJob');
+Route::post('/admin/update-job/{id}', [AdminController::class, 'updateJob'])->name('admin.updateJob');
+Route::delete('/admin/delete-job/{id}', [AdminController::class, 'deleteJob'])->name('admin.deleteJob');
+Route::get('/admin/moderate-content', [AdminController::class, 'moderateContent'])->name('admin.moderate-content');
 
 require __DIR__.'/auth.php';

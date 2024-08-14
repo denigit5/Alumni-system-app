@@ -15,9 +15,9 @@
             max-width: 60%;
             margin: auto;
             padding: 4rem;
-            margin-top: 4%;
+            margin-top: 2%;
             width: 400px;
-            height: auto;
+            height: 450px;
             background-color: #3E3E3E; /* slightly lighter grey for form background */
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);

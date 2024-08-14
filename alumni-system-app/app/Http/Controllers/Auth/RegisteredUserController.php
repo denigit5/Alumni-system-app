@@ -26,8 +26,10 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'alumni',
         ]);
+
+        // Assign the 'alumni' role to the user
+        $user->assignRole('alumni');
 
         // Automatically login the user after registration
         Auth::login($user);
@@ -50,8 +52,10 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'employer',
         ]);
+
+        // Assign the 'employer' role to the user
+        $user->assignRole('employer');
 
         // Automatically login the user after registration
         Auth::login($user);
@@ -69,3 +73,4 @@ class RegisteredUserController extends Controller
         ]);
     }
 }
+

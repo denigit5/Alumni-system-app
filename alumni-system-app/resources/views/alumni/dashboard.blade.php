@@ -13,6 +13,9 @@
                     <a href="{{ route('about') }}" class="text-gray-500 hover:text-gray-700">About Us</a>
                     <a href="{{ route('alumni.jobs') }}" class="text-gray-500 hover:text-gray-700">Jobs</a>
                 </div>
+                <div class="profile-pic">
+                <img src="" alt="User Profile Picture" style="background-color: #EFEFEF; color: #757575; font-size: 15px;">
+            </div>
             </nav>
 
             <!-- Cards for Alumni Actions -->
@@ -21,8 +24,8 @@
                 
                 <!-- Create Portfolio Card -->
                 <div class="card card-one bg-gray-700 rounded-lg shadow-md p-6 text-center" style="background-color: transparent; box-shadow: none; text-align:start;">
-                    <h3 class="text-red-500 font-semibold text-lg" style="color: #D0312D; font-size: 28px;">Create Portfolio</h3>
-                    <p class="text-white mt-2" style="font-size: 1.5rem; width: 60%; height:200px;">Build and showcase your professional portfolio, including various projects and achievements that highlight your skills and experiences.</p>
+                    <h3 class="text-red-500 font-semibold text-lg" style="color: #D0312D; font-size: 28px; line-height: 42px;">Create Portfolio</h3>
+                    <p class="text-white mt-2" style="font-size: 2rem; width: 60%; height:200px;">Build and showcase your professional portfolio, including various projects and achievements that highlight your skills and experiences.</p>
                     <a href="{{ route('alumni.createPortfolio') }}" class="text-red-500 mt-4 inline-block" style="background-color: gray; color: white; padding: 1rem; text-decoration: none;">Build Portfolio</a>
                 </div>
             </div>
@@ -79,6 +82,19 @@
                 background-color: black;
                 height: 50px;
                 padding-left: 25%;
+            }
+            .navbar .profile-pic {
+            margin-left: 80%;
+            margin-top: -3rem;;
+            display: flex;
+            align-items: center;
+            }
+
+            .navbar .profile-pic img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
             }
             .flex {
                 margin-left: 35%;

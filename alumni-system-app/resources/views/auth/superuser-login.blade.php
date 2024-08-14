@@ -15,9 +15,9 @@
             max-width: 60%;
             margin: auto;
             padding: 4rem;
-            margin-top: 4%;
+            margin-top: 2%;
             width: 400px;
-            height: auto;
+            height: 450px;
             background-color: #3E3E3E; /* slightly lighter grey for form background */
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -131,7 +131,7 @@
         <!-- Session Status -->
         <x-auth-session-status class="mb-4" :status="session('status')" />
 
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" action="{{ route('superuser-login') }}">
             <h2 style="text-align: center; color:#f04037;">Superuser Login</h2>
             @csrf
 
@@ -167,14 +167,6 @@
                 <button type="submit" class="x-primary-button ms-3">
                     {{ __('Log in') }}
                 </button>
-            </div>
-
-            <div class="message">
-                <p>Don't have an account? <a href="{{ route('register') }}" class="underline text-gray-600 hover:text-gray-900">Create one here</a></p>
-            </div>
-
-            <div class="flex items-center justify-end">
-                <a href="{{ route('register') }}" class="register-button">Register</a>
             </div>
             
             <div class="image"></div>

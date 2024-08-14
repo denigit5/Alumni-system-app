@@ -5,27 +5,28 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AuthenticatedSessionController extends Controller
 {
-    public function showAlumniLoginForm()
-    {
-        return view('auth.alumni-login');
-    }
-
     public function showEmployerLoginForm()
     {
         return view('auth.employer-login');
     }
 
-    public function showSuperUserLoginForm()
+    public function showAlumniLoginForm()
     {
-        return view('auth.superuser-login');
+        return view('auth.alumni-login');
     }
 
     public function showAdminLoginForm()
     {
         return view('auth.admin-login');
+    }
+
+    public function showSuperuserLoginForm()
+    {
+        return view('auth.superuser-login');
     }
 
     public function store(Request $request)
@@ -37,31 +38,24 @@ class AuthenticatedSessionController extends Controller
 
             $user = Auth::user();
 
-            switch ($user->role) {
-                case 'alumni':
-                    return redirect()->route('alumni.dashboard');
-                case 'employer':
-                    return redirect()->route('employer.dashboard');
-                case 'admin':
-                    return redirect()->route('admin.dashboard');
-                case 'superuser':
-                    return redirect()->route('superuser.dashboard');
-                default:
-                    Auth::logout();
-                    return redirect()->route('welcome')->withErrors(['error' => 'Invalid role.']);
+            Log::info('User logged in:', ['user' => $user]);
+
+            if ($user->hasRole('employer')) {
+                return redirect()->route('employer.dashboard');
+            } elseif ($user->hasRole('alumni')) {
+                return redirect()->route('alumni.dashboard');
+            } elseif ($user->hasRole('admin')) {
+                return redirect()->route('admin.dashboard');
+            } elseif ($user->hasRole('superuser')) {
+                return redirect()->route('superuser.dashboard');
+            } else {
+                Auth::logout();
+                return redirect()->route('welcome')->withErrors(['error' => 'Invalid user role.']);
             }
         }
 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ]);
-    }
-
-    public function destroy(Request $request)
-    {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect('/');
     }
 }

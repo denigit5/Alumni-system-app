@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use RolesAndPermissionsSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

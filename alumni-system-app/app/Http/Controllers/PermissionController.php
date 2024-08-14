@@ -13,10 +13,15 @@ class PermissionController extends Controller
 
     public function create()
     {
-
+        return view('role-permission.permission.create');
     }
 
     public function edit()
+    {
+
+    }
+
+    public function update()
     {
 
     }

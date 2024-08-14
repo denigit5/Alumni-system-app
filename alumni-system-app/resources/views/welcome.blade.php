@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel</title>
+    <title>IST Alumni</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css') }}">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
@@ -166,7 +166,7 @@
         <img src="https://images.app.goo.gl/7MADNHTMUogd2JbBA" alt="" style="width: 300px; height: auto; margin-top: 20px;">
 
         <div class="flex-container">
-            <div class="section" onclick="window.location='{{ route('alumni-register') }}'">
+            <div class="section" onclick="window.location='{{ route('alumni-login') }}'">
                 <h3>For Alumni</h3>
                 <p>
                     Welcome Alumni! This platform enables you to connect with your peers, showcase your skills, and discover exciting opportunities tailored just for you.
@@ -174,7 +174,7 @@
                 <div class="arrow"></div>
             </div>
 
-            <div class="section" onclick="window.location='{{ route('employer-register') }}'">
+            <div class="section" onclick="window.location='{{ route('employer-login') }}'">
                 <h3>For Employers</h3>
                 <p>
                     Welcome Employers! Join us in building connections with talented alumni who are ready to make an impact in the software industry and beyond.
